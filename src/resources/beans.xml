@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启注解-->
+    <context:annotation-config/>
+    <!--注解的位置-->
+    <context:component-scan base-package="action"/>
+    <context:component-scan base-package="dao"/>
+    <context:component-scan base-package="service"/>
+
+    <!--beans实例-->
+    <bean id="user" class="model.User">
+        <property name="name" value="cc"></property>
+        <property name="password" value="123456789"></property>
+    </bean>
+
+</beans>
