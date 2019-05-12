@@ -13,11 +13,4 @@
     <context:component-scan base-package="action"/>
     <context:component-scan base-package="dao"/>
     <context:component-scan base-package="service"/>
-
-    <!--beans实例-->
-    <bean id="user" class="model.User">
-        <property name="name" value="cc"></property>
-        <property name="password" value="123456789"></property>
-    </bean>
-
 </beans>
