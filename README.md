@@ -35,3 +35,19 @@ base-package指向必须是package,不能是其他类型
 Autowired根据类型注入值  
 如果是一个接口，从容器找接口实现类  
 如果是一个实现类，就找类  
+
+## git同步
+<a href="https://www.cnblogs.com/schaepher/p/4933873.html" >github团队项目合作流程</a>
+
+## spring Aop学习
+### 什么是AOP
+AOP(Aspect-Oriented Programming), 即 面向切面编程, 它与 OOP( Object-Oriented Programming, 面向对象编程) 相辅相成, 提供了与 OOP 不同的抽象软件结构的视角.
+在 OOP 中, 我们以类(class)作为我们的基本单元, 而 AOP 中的基本单元是 Aspect(切面)，纯Java语言
+
+### AOP有什么用
+ 1.对业务逻辑的各个部分进行隔离，降低耦合度，提高程序可重用性
+ 2.经典应用：事物管理、性能测试、安全检查、缓存
+ 
+###AOP学习问题总结
+ 1.aop用JDK产生代理拦截时，业务类一定要用接口
+ 2.cglib代理拦截时，业务类可以是接口也可以不是接口

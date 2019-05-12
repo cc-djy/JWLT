@@ -13,4 +13,18 @@
     <context:component-scan base-package="action"/>
     <context:component-scan base-package="dao"/>
     <context:component-scan base-package="service"/>
+
+    <!--配置userService-->
+    <bean id="userService" class="service.UserService"></bean>
+    <!--配置切面对象-->
+    <bean id="aspect" class="service.MyAspect"></bean>
+    <!--配置代理对象-->
+    <bean id="serviceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--接口-->
+        <property name="interfaces" value="service.userServiceInterface"></property>
+        <!--目标类-->
+        <property name="target" ref="userService"></property>
+        <!--切面类-->
+        <property name="interceptorNames" value="aspect"></property>
+    </bean>
 </beans>

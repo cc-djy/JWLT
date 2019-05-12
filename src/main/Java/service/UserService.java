@@ -12,7 +12,23 @@ public class UserService implements userServiceInterface{
 
     @Override
     public void addUserService(User u){
-        System.out.println("service添加用户" + u);
+        System.out.println("添加用户" + u);
         ud.addUserDao(u);
     }
+    @Override
+    public void addUser() {
+        System.out.println("添加用户......" );
+    }
+
+    @Override
+    public Object deleteUser(int id) {
+        System.out.println("删除用户.....");
+        return id;
+    }
+
+    @Override
+    public void updateUser() {
+        System.out.println("更新用户");
+    }
+
 }
