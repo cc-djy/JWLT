@@ -27,6 +27,7 @@ public class UserServiceAspectFactory {
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                         myAspect.before();
                         Object reObject = method.invoke(userService,args);
+                        System.out.println(reObject);
                         myAspect.after();
                         return reObject;//业务方法的返回值
                     }

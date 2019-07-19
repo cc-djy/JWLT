@@ -16,8 +16,9 @@ public class UserService implements userServiceInterface{
         ud.addUserDao(u);
     }
     @Override
-    public void addUser() {
+    public String addUser(String name) {
         System.out.println("添加用户......" );
+        return name;
     }
 
     @Override

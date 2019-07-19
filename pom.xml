@@ -64,10 +64,18 @@
             <artifactId>spring-aop</artifactId>
             <version>5.1.7.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.aopalliance</groupId>
             <artifactId>com.springsource.org.aopalliance</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>com.springsource.org.aspectj.weaver</artifactId>
+            <version>1.7.1.RELEASE</version>
         </dependency>
 
 

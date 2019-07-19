@@ -25,8 +25,8 @@ public class MyAspect implements MethodInterceptor {
         System.out.println("开启事务");
         //放行
         Object retobj = methodInvocation.proceed();
-
+        System.out.println(retobj);
         System.out.println("提交事务");
-        return null;
+        return retobj;
     }
 }

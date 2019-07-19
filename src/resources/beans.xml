@@ -26,5 +26,7 @@
         <property name="target" ref="userService"></property>
         <!--切面类-->
         <property name="interceptorNames" value="aspect"></property>
+        <!--        配置cglib生成-->
+        <property name="optimize" value="true" ></property>
     </bean>
 </beans>
