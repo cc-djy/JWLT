@@ -147,7 +147,31 @@ AOP(Aspect-Oriented Programming), 即 面向切面编程, 它与 OOP( Object-Ori
   ```
  如果使用了环绕通知，就不用使用前面两个了,expression有多个表达式，可以上网查一下
 
- 5.aspectj使用注解方式
+ 5.<strong>aspectj使用注解方式（常用）</strong>
+ xml配置
+ ```xml
+ <!--开启注解-->
+    <context:annotation-config/>
+    <context:component-scan base-package="service"></context:component-scan>
+    <context:component-scan base-package="aspect"></context:component-scan>
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    <aop:config>
+        <aop:aspect ref="myAspectj"></aop:aspect>
+    </aop:config>
+```
+aspect代码
+```xml
+@Component
+@Aspect
+public class myAspectj {
+
+    @Before("execution(* service.*.*(..))")
+    public void aspectBefore(JoinPoint joinPoint){
+        System.out.println(joinPoint.getSignature().getName()+".......前置通知");
+    }
+}
+```
+需要注意的是不同的编辑器也可能出错
 
 ###Spring 的jdbcTemplate学习
 c3p0与dbcp区别：<br>
