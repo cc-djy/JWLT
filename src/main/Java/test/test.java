@@ -1,12 +1,8 @@
 package test;
 
-import action.UserAction;
-import model.User;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import service.UserService;
-import service.UserServiceAspectFactory;
 import service.userServiceInterface;
 
 public class test {
