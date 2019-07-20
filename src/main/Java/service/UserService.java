@@ -1,8 +1,6 @@
 package service;
 
-import dao.userDaoInterface;
 import model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("userService")

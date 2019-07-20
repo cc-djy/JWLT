@@ -173,8 +173,37 @@ public class myAspectj {
 ```
 需要注意的是不同的编辑器也可能出错
 
-###Spring 的jdbcTemplate学习
-c3p0与dbcp区别：<br>
+##Spring 的jdbcTemplate学习
+###c3p0与dbcp的xml配置：<br>
+```xml
+<!--&lt;!&ndash;配置DBCP数据源&ndash;&gt;-->
+    <!--&lt;!&ndash;配置datasource对象&ndash;&gt;-->
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>-->
+        <!--<property name="url" value="jdbc:mysql://localhost:3306/springJDBC"></property>-->
+        <!--<property name="username" value="root"></property>-->
+        <!--<property name="password" value="123456"></property>-->
+    <!--</bean>-->
+
+    <!--配置c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/springJDBC"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="123456"></property>
+    </bean>
+
+    <!--配置jdbcTemp对象-->
+    <bean id="jdbcTemp" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置dao-->
+    <bean id="userDao" class="dao.UserDao">
+        <property name="jdbcTemplate" ref="jdbcTemp"></property>
+    </bean>
+```
+在连接数据库的时候，dbcp和c3p0两个数据源只能用一个<br>
+###c3p0与dbcp区别：<br>
 dbcp没有自动回收空闲连接的功能<br>
 c3p0有自动回收空闲连接功能<br>
 两者主要是对数据连接的处理不同c3p0提供最大空闲时间，dbcp提供最大连接数。前者是如果连接时间超过最大连接时间，就会断开当前连接。dbcp如果超过最大连接数，就会断开所有连接。<br>
