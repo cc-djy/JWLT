@@ -1,5 +1,6 @@
 package dao;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,11 +23,14 @@ public class UserDao implements userDaoInterface{
     }
 
 
-    public void addUser(Object user) {
-        jdbcTemplate.update("insert into spring(userNAME, PASSWORD) value (?,?)","cc","123456");
+    public void addUser(User user) {
+        jdbcTemplate.update("insert into spring(userNAME, PASSWORD) value (?,?)",user.getName(),user.getPassword());
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public void setDataSource(ComboPooledDataSource dataSource) {
     }
 }

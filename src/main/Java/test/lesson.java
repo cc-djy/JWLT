@@ -13,12 +13,12 @@ import service.userServiceInterface;
 public class lesson {
     @Test
     public void test() throws Exception{
-        ApplicationContext context = new ClassPathXmlApplicationContext("JDBCBeans.xml");
-//        userServiceInterface userService = (userServiceInterface) context.getBean("userService");
-//        userService.deleteUser(1);
-        userDaoInterface userDao = (userDaoInterface) context.getBean("userDao");
-        User user =new User();
-        userDao.addUser(user);
+        ApplicationContext context = new ClassPathXmlApplicationContext("lessonBeans.xml");
+        userServiceInterface userService = (userServiceInterface) context.getBean("userService");
+        userService.deleteUser(1);
+//        userDaoInterface userDao = (userDaoInterface) context.getBean("userDao");
+//        User user =new User();
+//        userDao.addUser(user);
 //        BasicDataSource dataSource = new BasicDataSource();
 //        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 //        dataSource.setUrl("jdbc:mysql://localhost:3306/springJDBC");

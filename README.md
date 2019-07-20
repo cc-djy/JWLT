@@ -206,17 +206,187 @@ public class myAspectj {
 ###c3p0与dbcp区别：<br>
 dbcp没有自动回收空闲连接的功能<br>
 c3p0有自动回收空闲连接功能<br>
-两者主要是对数据连接的处理不同c3p0提供最大空闲时间，dbcp提供最大连接数。前者是如果连接时间超过最大连接时间，就会断开当前连接。dbcp如果超过最大连接数，就会断开所有连接。<br>
+两者主要是对数据连接的处理不同:c3p0提供最大空闲时间，dbcp提供最大连接数。前者是如果连接时间超过最大连接时间，就会断开当前连接。dbcp如果超过最大连接数，就会断开所有连接。<br>
 JDBC和OBDC都是链接数据库的
 
+##事务管理器
+主要是xml文件的区别
+###手动事务管理器配置
+```xml
+ <!--读取db.properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--配置c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+    <!--配置dao-->
+    <bean id="acconutDao" class="Dao.impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
 
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--配置dataSource-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置事务模板-->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <!--事务管理器-->
+        <property name="transactionManager" ref="txManager"></property>
+    </bean>
 
+    <!--配置Service-->
+    <bean id="accountService" class="Service.impl.AccountServiceImpl">
+        <property name="acconutDao" ref="acconutDao"></property>
+        <!--配置事务模板-->
+        <property name="transactionTemplate" ref="transactionTemplate"></property>
+    </bean>
+```
+使用的函数代码
+```xml
+@Override
+    //spring配置事务模板
+    private TransactionTemplate transactionTemplate;
 
-###Maven使用总结
+    public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+        this.transactionTemplate = transactionTemplate;
+    }
+    public void transferMoney(final String outer, final String inner, final Integer money) {
+        this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                //扣钱
+                accountDao.out(outer,money);
+                //进账
+                accountDao.in(inner,money);
+            }
+        });
+    }
+```
+###spring事务管理器半自动
+```xml
+<!--读取db.properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--配置c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+    <!--配置dao-->
+    <bean id="acconutDao" class="Dao.impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--配置dataSource-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置Service-->
+    <bean id="accountService" class="Service.impl.AccountServiceImpl2">
+        <property name="acconutDao" ref="acconutDao"></property>
+    </bean>
+
+    <!--配置工厂代理-->
+    <bean id="proxyService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <!--接口-->
+        <property name="proxyInterfaces" value="Service.IAccountService"></property>
+        <!--目标对象-->
+        <property name="target" ref="accountService"></property>
+        <!--切面对象：spring做-->
+
+        <!--事务管理器-->
+        <property name="transactionManager" ref="txManager"></property>
+        <!--transactionAttributes事务的属性配置
+            key:写方法名
+            value:写事务配置
+            参数 readOnly：只能读
+                 +所报的异常代表继续提交
+                 -所报的异常代表回滚
+        -->
+        <property name="transactionAttributes">
+            <props>
+                <prop key="transferMoney">PROPAGATION_REQUIRED,ISOLATION_DEFAULT,+java.lang.ArithmeticException</prop>
+                <prop key="add">PROPAGATION_REQUIRED,ISOLATION_DEFAULT</prop>
+                <prop key="delete">PROPAGATION_REQUIRED,ISOLATION_DEFAULT</prop>
+            </props>
+        </property>
+    </bean>
+```
+工厂bean生产代理，事务半自动管理只要写xml文件
+使用时通过context获取代理，如context.getBean("proxyService");
+###aop事务配置（掌握）
+```xml
+<!--读取db.properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--配置c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+    <!--配置dao-->
+    <bean id="acconutDao" class="Dao.impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--配置dataSource-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置Service-->
+    <bean id="accountService" class="Service.impl.AccountServiceImpl2">
+        <property name="acconutDao" ref="acconutDao"></property>
+    </bean>
+
+    <!--使用spring-aop标签来配置-->
+    <!--配置通知事务管理器-->
+    <tx:advice id="interceptor" transaction-manager="txManager">
+        <!--事务详情:传播行为，隔离级别-->
+        <tx:attributes>
+            <tx:method name="transferMoney" propagation="REQUIRED" isolation="DEFAULT"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--把事务的通知与切入点关联-->
+    <aop:config>
+        <!--切入点-->
+        <aop:pointcut id="myPointCut" expression="execution(* Service..*.*(..))"></aop:pointcut>
+        <!--事务与切入点关联-->
+        <aop:advisor advice-ref="interceptor" pointcut-ref="myPointCut"></aop:advisor>
+    </aop:config>
+```
+使用时，通过context获取，如context.getBean("accountService");
+###基于注解的事务管理器配置
+```xml
+<!--读取db.properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--配置c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+<!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--配置dataSource-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--开启事务注解驱动-->
+    <tx:annotation-driven transaction-manager="txManager"></tx:annotation-driven>
+```
+可以在整个类的前面或者某个方法前面上添加@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT)，里面的参数由自己定，作用不一样。不同的位置上添加的作用区域不同
+###对于事务管理器推荐使用aop和注解方式
+##Maven使用总结
  1.maven有一些jar包没有，需要自行下载放到项目下
  2.jar包可以到https://maven.aliyun.com/mvn/search或者https://mvnrepository.com查找相关的依赖
 
-###xml配置文件list和map用法
+##xml配置文件list和map用法
  ```xml
  <bean id="" class="">
      <property name="sets">

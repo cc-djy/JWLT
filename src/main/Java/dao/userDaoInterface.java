@@ -4,6 +4,6 @@ import model.User;
 
 public interface userDaoInterface {
     public void addUserDao(User u);
-    public void addUser(Object user);
+    public void addUser(User user);
 
 }
