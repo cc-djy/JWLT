@@ -1,7 +1,7 @@
 package dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import model.User;
+import sshModel.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

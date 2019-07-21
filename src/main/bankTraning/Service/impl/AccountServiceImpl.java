@@ -22,7 +22,7 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public void transferMoney(final String outer, final String inner, final Integer money) {
+    public Object transferMoney(final String outer, final String inner, final Integer money) {
         this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
@@ -33,5 +33,6 @@ public class AccountServiceImpl implements IAccountService {
                 accountDao.in(inner,money);
             }
         });
+        return outer;
     }
 }

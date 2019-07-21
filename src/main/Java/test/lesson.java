@@ -1,13 +1,8 @@
 package test;
 
-import dao.UserDao;
-import dao.userDaoInterface;
-import model.User;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
 import service.userServiceInterface;
 
 public class lesson {

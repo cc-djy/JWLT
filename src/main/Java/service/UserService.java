@@ -1,6 +1,6 @@
 package service;
 
-import model.User;
+import sshModel.User;
 import org.springframework.stereotype.Service;
 
 @Service("userService")

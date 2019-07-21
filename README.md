@@ -382,6 +382,8 @@ JDBC和OBDC都是链接数据库的
 ```
 可以在整个类的前面或者某个方法前面上添加@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT)，里面的参数由自己定，作用不一样。不同的位置上添加的作用区域不同
 ###对于事务管理器推荐使用aop和注解方式
+
+
 ##Maven使用总结
  1.maven有一些jar包没有，需要自行下载放到项目下
  2.jar包可以到https://maven.aliyun.com/mvn/search或者https://mvnrepository.com查找相关的依赖

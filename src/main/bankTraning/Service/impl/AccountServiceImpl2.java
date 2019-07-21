@@ -18,11 +18,12 @@ public class AccountServiceImpl2 implements IAccountService {
     }
 
     @Override
-    public void transferMoney(final String outer, final String inner, final Integer money) {
+    public Object transferMoney(final String outer, final String inner, final Integer money) {
         //扣钱
         accountDao.out(outer,money);
-        int i = 10 / 0;
         //进账
         accountDao.in(inner,money);
+        String message = outer + "转了" + money + "元给" + inner;
+        return message;
     }
 }

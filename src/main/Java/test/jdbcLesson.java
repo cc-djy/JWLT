@@ -1,7 +1,7 @@
 package test;
 
 import dao.userDaoInterface;
-import model.User;
+import sshModel.User;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

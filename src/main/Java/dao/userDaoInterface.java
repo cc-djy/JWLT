@@ -1,6 +1,6 @@
 package dao;
 
-import model.User;
+import sshModel.User;
 
 public interface userDaoInterface {
     public void addUserDao(User u);

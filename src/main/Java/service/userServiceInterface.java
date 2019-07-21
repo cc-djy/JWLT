@@ -1,6 +1,6 @@
 package service;
 
-import model.User;
+import sshModel.User;
 
 public interface userServiceInterface {
     public void addUserService(User u);
