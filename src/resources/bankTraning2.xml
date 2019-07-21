@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--读取db.properties-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--配置c3p0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+    <!--配置dao-->
+    <bean id="acconutDao" class="Dao.impl.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--配置dataSource-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置Service-->
+    <bean id="accountService" class="Service.impl.AccountServiceImpl2">
+        <property name="acconutDao" ref="acconutDao"></property>
+    </bean>
+
+    <!--配置工厂代理-->
+    <bean id="proxyService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <!--接口-->
+        <property name="proxyInterfaces" value="Service.IAccountService"></property>
+        <!--目标对象-->
+        <property name="target" ref="accountService"></property>
+        <!--切面对象：spring做-->
+
+        <!--事务管理器-->
+        <property name="transactionManager" ref="txManager"></property>
+        <!--transactionAttributes事务的属性配置
+            key:写方法名
+            value:写事务配置
+            参数 readOnly：只能读
+                 +所报的异常代表继续提交
+                 -所报的异常代表回滚
+        -->
+        <property name="transactionAttributes">
+            <props>
+                <prop key="transferMoney">PROPAGATION_REQUIRED,ISOLATION_DEFAULT,+java.lang.ArithmeticException</prop>
+                <prop key="add">PROPAGATION_REQUIRED,ISOLATION_DEFAULT</prop>
+                <prop key="delete">PROPAGATION_REQUIRED,ISOLATION_DEFAULT</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
