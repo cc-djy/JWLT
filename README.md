@@ -2,11 +2,11 @@
 JavaWeb Learning Tour
 
 ## spring的注解注入方式
-@Autowired注入的是根据接口的名字，只使用于只有一个实现类
+@Autowired注入的是根据接口的名字，只使用于只有一个实现类<br>
 在实现类处加@Repository注解，意思就是new daoImpl(), 而在serviceImpl中定义属性dAO dAO就是将new出来的这个daoImpl对象向上转型为dao类型
-当有多个实现类的时候
-我们可以在每一个实现类都加入名字，如@Service（“abc”）,但要获取的时候，可以通过将你的属性名叫 abc来获取；
-也可以通过@Qualifier("name")的指定组件名来获取，name为实现类的名字
+当有多个实现类的时候<br>
+我们可以在每一个实现类都加入名字，如@Service（“abc”）,但要获取的时候，可以通过将你的属性名叫 abc来获取；<br>
+也可以通过@Qualifier("name")的指定组件名来获取，name为实现类的名字<br>
 
 ## spring Ioc学习
 主要学习到用注解替换xml的配置：如：
