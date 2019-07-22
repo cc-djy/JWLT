@@ -9,10 +9,10 @@ JavaWeb Learning Tour
 也可以通过@Qualifier("name")的指定组件名来获取，name为实现类的名字<br>
 
 ## spring Ioc学习
-主要学习到用注解替换xml的配置：如：
-action层用 @Controller
-service层用 @Service
-dao层用 @Repository
+主要学习到用注解替换xml的配置：如：<br>
+action层用 @Controller<br>
+service层用 @Service<br>
+dao层用 @Repository<br>
 
 xml文件如下
 ```xml
