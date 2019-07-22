@@ -10,7 +10,7 @@
     </listener>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:new-spring-hibernate-context.xml</param-value>
+        <param-value>classpath:new-spring-hibernate-context.xml,classpath:src</param-value>
     </context-param>
 
     <!--配置struts拦截器-->

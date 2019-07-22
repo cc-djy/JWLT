@@ -24,11 +24,10 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <!--配置dataSource-->
         <property name="dataSource" ref="dataSource"></property>
-
         <property name="hibernateProperties">
             <props>
-                <prop key="show_sql">true</prop>
-                <prop key="format_sql">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
             </props>
@@ -41,12 +40,12 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     <!--创建dao-->
-    <bean id="userDaoImpl" class="sshDao.impl.userDaoImpl">
+    <bean id="userDao" class="sshDao.impl.userDaoImpl">
         <property name="hibernateTemplate" ref="hibernateTemp"></property>
     </bean>
     <!--创建service-->
     <bean id="userService" class="sshService.impl.userServiceImpl">
-        <property name="userDao" ref="userDaoImpl"></property>
+        <property name="userDao" ref="userDao"></property>
     </bean>
     <!--配置事务-->
     <!--配置事务管理器-->
@@ -57,7 +56,7 @@
     <!--配置通知-->
     <tx:advice id="txAdvice" transaction-manager="txManager">
         <tx:attributes>
-            <tx:method name="register"/>
+            <tx:method name="registering"/>
         </tx:attributes>
     </tx:advice>
     <!--把通知应用到切入点-->

@@ -12,6 +12,13 @@ public class User {
         this.age = a;
     }
 
+    public User(Integer i,String n, String s, int a) {
+        this.id = i;
+        this.name = n;
+        this.password = s;
+        this.age = a;
+    }
+
     public Integer getId() {
         return id;
     }
