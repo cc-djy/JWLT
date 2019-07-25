@@ -29,7 +29,15 @@
     <!--<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>-->
     <!--配置控制器-相当于配置访问路径-->
     <!--<bean class="com.cc.controller.UserController"></bean>-->
-
+    <!--配置注解处理映射-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>-->
+    <!--&lt;!&ndash;配置适配器&ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!--&lt;!&ndash;配置json转换器,springmvc使用jaskson来转换json&ndash;&gt;-->
+        <!--<property name="messageConverters">-->
+            <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>-->
+        <!--</property>-->
+    <!--</bean>-->
     <!--配置资源视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--前缀-->

@@ -283,14 +283,14 @@ public class UserExt {
  
  
  ##springmvc一些注解理解
- 1. @RequestMapping("/userController")：项目查找路径，如
+ 1. @RequestMapping("/userController")：针对访问路径，项目查找路径，如
  public class UserController{
      @RequestMapping("/toListUser")
      public String toListUser(Model model){}
  }
  访问的路径是/userController/toListUser.do，而不是/UserController/toListUser
  2. @RequestMapping("/toEditUser1/{username}")
-    public String toEditUser1(@PathVariable String username, Model model)中的@PathVariable：是用来获得请求url中的动态参数
+    public String toEditUser1(@PathVariable String username, Model model)中的@PathVariable：针对前端传来的参数作为查找路径和参数，是用来获得请求url中的动态参数
  3.public String test1(@RequestParam(value = "uid",required = true,defaultValue = "30") Integer uid)
  /**
    * @RequestParam(value = "uid",required = true,defaultValue = "30")
