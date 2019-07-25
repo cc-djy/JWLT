@@ -246,3 +246,54 @@ public class UserExt {
  }
  ```
  ***五种方式中，需要注意前面两种的代码和后面三种区别有点大***
+ ##模拟数据库进行数据传输
+  ```java
+  @RequestMapping("/toListUser")
+     public String toListUser(Model model){
+         //模拟数据库存取数据
+         List<User> userList = new ArrayList<User>();
+         User user1 = new User("cc","123456",22);
+         User user2 = new User("djy","123456",23);
+         User user3 = new User("cc-djy","123456",2);
+         userList.add(user1);
+         userList.add(user2);
+         userList.add(user3);
+         model.addAttribute("userList",userList);
+         return "user/userList";
+     }
+ ```
+ ```jsp
+ <table border="1">
+     <tr>
+         <td>姓名</td>
+         <td>密码</td>
+         <td>年龄</td>
+     </tr>
+     <c:forEach items="${userList}" var="user">
+         <tr>
+             <td>${user.username}</td>
+             <td>${user.password}</td>
+             <td>${user.age}</td>
+         </tr>
+     </c:forEach>
+ </table>
+ ```
+ 
+ 
+ 
+ 
+ ##springmvc一些注解理解
+ 1. @RequestMapping("/userController")：项目查找路径，如
+ public class UserController{
+     @RequestMapping("/toListUser")
+     public String toListUser(Model model){}
+ }
+ 访问的路径是/userController/toListUser.do，而不是/UserController/toListUser
+ 2. @RequestMapping("/toEditUser1/{username}")
+    public String toEditUser1(@PathVariable String username, Model model)中的@PathVariable：是用来获得请求url中的动态参数
+ 3.public String test1(@RequestParam(value = "uid",required = true,defaultValue = "30") Integer uid)
+ /**
+   * @RequestParam(value = "uid",required = true,defaultValue = "30")
+   * required = true时，没有加入defaultValue时，uid为必传
+   * efaultValue = "30",当uid没有传时，默认给30
+  */

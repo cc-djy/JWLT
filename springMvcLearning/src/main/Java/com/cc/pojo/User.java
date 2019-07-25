@@ -13,6 +13,15 @@ public class User {
     @Value("12")
     private Integer age;
 
+    public User() {
+    }
+
+    public User(String username, String password, Integer age) {
+        this.username = username;
+        this.password = password;
+        this.age = age;
+    }
+
     @Override
     public String toString() {
         return "User{" +

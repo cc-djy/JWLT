@@ -11,17 +11,17 @@
     <title>Title</title>
 </head>
 <body>
-<form action="../userController/addUser.do" method="get">
+<form action="${pageContext.request.contextPath}/userController/addUser.do" method="get">
     <input name="username" type="text"><br>
     <input name="password"  type="password"><br>
-    <input name="age" type="text"><br>.
+    <input name="age" type="text"><br>
     <input type="submit"> <br>
 </form>
-<br>表单使用model来接收
+<br>表单使用model的扩展来接收
 <form action="../userController/addUser2.do" method="get">
     <input name="user.username" type="text"><br>
     <input name="user.password"  type="password"><br>
-    <input name="user.age" type="text"><br>.
+    <input name="user.age" type="text"><br>
     <input type="submit"> <br>
 </form>
 <br>表单使用list来接收
