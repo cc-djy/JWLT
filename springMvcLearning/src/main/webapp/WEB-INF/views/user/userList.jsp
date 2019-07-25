@@ -7,9 +7,9 @@
     <title>title</title>
 </head>
 <body>
-${User.username}<br>
-${User.password}<br>
-${User.age}<br>
+${user.username}<br>
+${user.password}<br>
+${user.age}<br>
 
 用户列表
 </body>
