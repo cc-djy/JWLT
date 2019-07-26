@@ -18,16 +18,18 @@
             //把json对象转字符串
             var parameters = JSON.stringify(jsonObj);
             console.log(jsonObj);
-            console.log(parameters);
+            console.log("parameters="+parameters);
             var url='${pageContext.request.contextPath}/stuController/register.do';
             $.ajax({
+                type:"post",
                 url:url,
-                data:jsonObj,
-                contentType:'application/json;charset=utf-8',
-                success:function (respData) {
-                    alert("success"+respData.name);
+                data:parameters,
+                contentType:"application/json;charset=utf-8",
+                success:function (msg) {
+                    alert("success:"+ JSON.stringify(msg).charAt(1));
+                    // location.href="../userController/toListUser.do"
                 }
-            })
+            });
         }
     </script>
 </head>
