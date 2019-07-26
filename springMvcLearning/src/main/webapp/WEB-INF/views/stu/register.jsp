@@ -19,15 +19,16 @@
             var parameters = JSON.stringify(jsonObj);
             console.log(jsonObj);
             console.log("parameters="+parameters);
-            var url='${pageContext.request.contextPath}/stuController/register.do';
+            var url='${pageContext.request.contextPath}/rest/stuController/register.json';
             $.ajax({
                 type:"post",
                 url:url,
                 data:parameters,
                 contentType:"application/json;charset=utf-8",
                 success:function (msg) {
-                    alert("success:"+ JSON.stringify(msg).charAt(1));
+                    console.log("success:"+ msg.name);
                     // location.href="../userController/toListUser.do"
+
                 }
             });
         }

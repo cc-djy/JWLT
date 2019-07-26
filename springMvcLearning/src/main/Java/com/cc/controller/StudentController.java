@@ -17,6 +17,11 @@ public class StudentController {
         return "stu/register";
     }
 
+
+    /**
+     * @RequestBody：把json数据转成模型对象
+     * @ResponseBody：返回json数据，把模型对象转成json
+     */
     @RequestMapping(value = "/register",method = {RequestMethod.POST})
     @ResponseBody
     public Student register(@RequestBody Student student){
@@ -24,13 +29,11 @@ public class StudentController {
         return student;
     }
 
-    @Test
-    public void main(){
-        User user = new User("cc","123456",21);
-        System.out.println(user);
+    @RequestMapping("/test")
+    public Student test(){
         Student stu = new Student();
         stu.setName("cc");
         stu.setPassword("123456");
-        System.out.println(stu);
+        return stu;
     }
 }

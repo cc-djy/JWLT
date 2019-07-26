@@ -1,9 +1,13 @@
 package com.cc.pojo;
 
+import com.sun.xml.internal.txw2.annotation.XmlElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 @Component
+@XmlRootElement(name = "Student")
 public class Student {
     @Value("yy")
     private String name;

@@ -50,6 +50,11 @@
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
+  <!--rest风格-->
+    <servlet-mapping>
+      <servlet-name>DispatcherServlet</servlet-name>
+      <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
 </web-app>
 ```
 ###DispatcherServlet.xml配置
@@ -297,3 +302,126 @@ public class UserExt {
    * required = true时，没有加入defaultValue时，uid为必传
    * efaultValue = "30",当uid没有传时，默认给30
   */
+ 
+##springmvc ajax传输和请求json数据方法
+jar包依赖，版本不要太高
+pom.xml
+```xml
+       <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+          <version>2.9.5</version>
+      </dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+          <version>2.9.5</version>
+      </dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.9.5</version>
+      </dependency>
+```
+###第一种,只能获取json格式
+DispatcherServlet-servlet.xml在mvc:annotation-driven中加入
+```xml
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html; charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+```
+Java用法
+```java
+/**
+     * @RequestBody：把json数据转成模型对象
+     * @ResponseBody：返回json数据，把模型对象转成json
+     */
+    @RequestMapping(value = "/register",method = {RequestMethod.POST})
+    @ResponseBody
+    public Student register(@RequestBody Student student){
+        System.out.println(student);
+        return student;
+    }
+```
+ajax请求路径
+```jsp
+<script type="text/javascript">
+        function register() {
+            var name = $('#name').val();
+            var password = $('#password').val();
+            var jsonObj={"name":name,"password":password};
+            //把json对象转字符串
+            var parameters = JSON.stringify(jsonObj);
+            console.log(jsonObj);
+            console.log("parameters="+parameters);
+            var url='${pageContext.request.contextPath}/stuController/register.do';
+            $.ajax({
+                type:"post",
+                url:url,
+                data:parameters,
+                contentType:"application/json;charset=utf-8",
+                success:function (msg) {
+                    console.log("success:"+ msg.name);
+                    // location.href="../userController/toListUser.do"
+                }
+            });
+        }
+    </script>
+```
+###第二种，多视图，可以获取多种格式
+```xml
+<!--配置多视图-->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <!-- 配置支持媒体类型 -->
+        <property name="contentNegotiationManager">
+            <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+                <property name="mediaTypes">
+                    <map>
+                        <entry key="json" value="application/json"></entry>
+                        <entry key="xml" value="application/xml"></entry>
+                        <entry key="pdf" value="application/pdf"></entry>
+                    </map>
+                </property>
+            </bean>
+        </property>
+        <!-- 指定默认视图 -->
+        <property name="defaultViews">
+            <!-- 支持多个视图 -->
+            <list>
+                <!-- 对josn格式视图支持 -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"></bean>
+                <!-- xml格式视图支持 -->
+                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+                    <constructor-arg>
+                        <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+                            <property name="classesToBeBound">
+                                <list>
+                                    <!--需要用到多视图的pojo类路径-->
+                                    <value>com.cc.pojo.Student</value>
+                                </list>
+                            </property>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+            </list>
+        </property>
+    </bean>
+```
+访问路径，用rest风格，如果用.do会被拦截，在web.xml有配置,路径写法  
+如果要获取json数据，路径写法为
+```jsp
+var url='${pageContext.request.contextPath}/rest/stuController/register.json';
+```
+如果要获取xml,需要在pojo类加上@XmlRootElement(name = "Student")，Student为类名，访问路径写法为
+```jsp
+var url='${pageContext.request.contextPath}/rest/stuController/register.xml';
+```
+
