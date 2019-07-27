@@ -4,6 +4,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <context-param>
+    <param-name/>
+    <param-value/>
+  </context-param>
   <!-- 处理字符乱码问题 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
@@ -29,14 +33,14 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
-  <!--&lt;!&ndash;找到上下文.xml&ndash;&gt;-->
-  <!--<context-param>-->
-    <!--<param-name>contextConfigLocation</param-name>-->
-    <!--<param-value>/WEB-INF/applicationContext.xml</param-value>-->
-  <!--</context-param>-->
-  <!--<listener>-->
-    <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-  <!--</listener>-->
+  <!--找到上下文.xml-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
 
   <!--DispatcherServlet会查询一个或多个处理器映射（handler mapping）并根据请求所携带的URL信息进行决策，将请求发送给哪个SpringMVC控制器（controller）-->
   <servlet>
@@ -45,9 +49,9 @@
     <init-param>
       <!--修改springmvc加载的配置文件路径-->
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:springmvc.xml</param-value>
+      <param-value>classpath:springMvc.xml</param-value>
     </init-param>
-    <load-on-startup>2</load-on-startup>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <!--拦截.do提交方式-->
   <servlet-mapping>
