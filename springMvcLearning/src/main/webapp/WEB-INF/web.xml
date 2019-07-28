@@ -4,10 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-  <context-param>
-    <param-name/>
-    <param-value/>
-  </context-param>
+
   <!-- 处理字符乱码问题 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
@@ -20,7 +17,7 @@
       <param-name>forceEncoding</param-name>
       <param-value>true</param-value>
     </init-param>
-  </filter>
+  </filter> 
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>

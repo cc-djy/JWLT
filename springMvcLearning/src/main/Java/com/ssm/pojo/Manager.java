@@ -16,8 +16,7 @@ public class Manager {
     public Manager() {
     }
 
-    public Manager(Integer mid, String name, String password, String gender, Integer age) {
-        this.mid = mid;
+    public Manager( String name, String password, String gender, Integer age) {
         this.name = name;
         this.password = password;
         this.gender = gender;

@@ -33,13 +33,13 @@
     </select>
 
     <!-- 查询修改用户信息的id -->
-    <select id="searchUpdateManagerFromName" resultMap="managerMap" parameterType="int">
+    <select id="searchUpdateManagerFromId" resultMap="managerMap" parameterType="int">
         select * from manager
         <where>mid=#{mid}</where>
     </select>
 
     <!-- 修改用户信息 -->
-    <update id="updateManagerFromName" parameterType="com.ssm.pojo.Manager">
+    <update id="updateManagerFromId" parameterType="com.ssm.pojo.Manager">
          update manager
          set name=#{name},password=#{password},gender=#{gender},
              age=#{age}
@@ -54,7 +54,7 @@
     </insert>
 
     <!-- 增删改查标签里的id:一定要和接口里对应的方法名一致 -->
-    <delete id="deleteManagerFromName" parameterType="int">
+    <delete id="deleteManagerFromId" parameterType="int">
         delete from manager
           <where>mid=#{mid}</where>
     </delete>

@@ -5,43 +5,44 @@ import com.ssm.pojo.Manager;
 import com.ssm.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class ManagerServiceImpl implements IManagerService {
     @Autowired
     private ManagerMapper managerMapper;
 
     @Override
+
     public Manager loginService(Integer id) throws Exception {
-        System.out.println("come here");
         return managerMapper.login(id);
     }
 
     @Override
     public List<Manager> getManagerList() throws Exception {
-
         return managerMapper.getManagerList();
     }
 
     @Override
-    public Manager searchUpdateManagerFromNameService(Integer id) throws Exception {
-        return null;
+    public Manager searchUpdateManagerFromIdService(Integer id) throws Exception {
+        return managerMapper.searchUpdateManagerFromId(id);
     }
 
     @Override
-    public void updateManagerFromNameService(Manager manager) throws Exception {
-
+    public void updateManagerFromIdService(Manager manager) throws Exception {
+        managerMapper.updateManagerFromId(manager);
     }
 
     @Override
     public void insertManagerService(Manager manager) throws Exception {
-
+        managerMapper.insertManager(manager);
     }
 
     @Override
-    public void deleteManagerFromNameService(Integer id) throws Exception {
-
+    public void deleteManagerFromIdService(Integer id) throws Exception {
+        managerMapper.deleteManagerFromId(id);
     }
 }

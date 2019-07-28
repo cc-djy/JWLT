@@ -11,14 +11,14 @@ public interface ManagerMapper {
     public List<Manager> getManagerList() throws Exception;
 
     //    查找需要更新的manager
-    public Manager searchUpdateManagerFromName(Integer id) throws Exception;
+    public Manager searchUpdateManagerFromId(Integer id) throws Exception;
 
     //    更新管理员信息
-    public void updateManagerFromName(Manager manager) throws Exception;
+    public void updateManagerFromId(Manager manager) throws Exception;
 
     //    添加管理员
     public void insertManager(Manager manager) throws Exception;
 
     //    删除管理员
-    public void deleteManagerFromName(Integer id) throws Exception;
+    public void deleteManagerFromId(Integer id) throws Exception;
 }

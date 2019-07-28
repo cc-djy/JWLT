@@ -425,4 +425,58 @@ var url='${pageContext.request.contextPath}/rest/stuController/register.json';
 var url='${pageContext.request.contextPath}/rest/stuController/register.xml';
 ```
 
-##ssm框架搭建结束
+##找不到mapper映射文件解决方法，
+ 1. 如果mapper的xml放在Java的mapper下，需要在pom.xml的build下加入下面代码
+```xml
+<!--如果不添加此节点mybatis的mapper.xml文件都会被漏掉。-->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+```
+mybaits.xml写法
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--别名配置-->
+    <typeAliases>
+        <package name="com.ssm.pojo"></package>
+    </typeAliases>
+    <mappers>
+        <!--加载映射文件,和ssm里的接口一致-->
+        <package name="com.ssm.mapper"></package>
+    </mappers>
+
+</configuration>
+```
+ 2. 如果不加入这一句话也ok，把mapper.xml文件移动到resource文件夹下
+mabatis.xml的写法改为
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--别名配置-->
+    <typeAliases>
+        <package name="com.ssm.pojo"></package>
+    </typeAliases>
+    <mappers>
+        <!--加载映射文件,和ssm里的接口一致-->
+        <mapper resource="mapper/ManagerMapper.xml"></mapper>
+    </mappers>
+
+</configuration>
+```
+
+
+
