@@ -12,10 +12,11 @@ import java.util.List;
 public class ManagerServiceImpl implements IManagerService {
     @Autowired
     private ManagerMapper managerMapper;
+
     @Override
-    public Manager loginService(String name) throws Exception {
+    public Manager loginService(Integer id) throws Exception {
         System.out.println("come here");
-        return managerMapper.login(name);
+        return managerMapper.login(id);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class ManagerServiceImpl implements IManagerService {
     }
 
     @Override
-    public Manager searchUpdateManagerFromNameService(String name) throws Exception {
+    public Manager searchUpdateManagerFromNameService(Integer id) throws Exception {
         return null;
     }
 
@@ -40,7 +41,7 @@ public class ManagerServiceImpl implements IManagerService {
     }
 
     @Override
-    public void deleteManagerFromNameService(Manager manager) throws Exception {
+    public void deleteManagerFromNameService(Integer id) throws Exception {
 
     }
 }

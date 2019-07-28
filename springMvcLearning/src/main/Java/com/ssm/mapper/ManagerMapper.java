@@ -1,11 +1,24 @@
 package com.ssm.mapper;
 import com.ssm.pojo.Manager;
 import java.util.List;
+
+//实现方法看config,里面的mapper,接口的命名和mapper里的xml命名要一致
 public interface ManagerMapper {
-    Manager login(String name) throws Exception;
+    //    登录判断，根据id
+    Manager login(Integer id) throws Exception;
+
+    //    获取所有管理员
     public List<Manager> getManagerList() throws Exception;
-    public Manager searchUpdateManagerFromName(String name) throws Exception;
+
+    //    查找需要更新的manager
+    public Manager searchUpdateManagerFromName(Integer id) throws Exception;
+
+    //    更新管理员信息
     public void updateManagerFromName(Manager manager) throws Exception;
+
+    //    添加管理员
     public void insertManager(Manager manager) throws Exception;
-    public void deleteManagerFromName(Manager manager) throws Exception;
+
+    //    删除管理员
+    public void deleteManagerFromName(Integer id) throws Exception;
 }

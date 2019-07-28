@@ -8,8 +8,8 @@
         <package name="com.ssm.pojo"></package>
     </typeAliases>
     <mappers>
-        <!--加载映射文件-->
-        <package name="com.ssm.mapper"></package>
+        <!--加载映射文件,和ssm里的接口一致-->
+        <mapper resource="mapper/ManagerMapper.xml"></mapper>
     </mappers>
 
 </configuration>

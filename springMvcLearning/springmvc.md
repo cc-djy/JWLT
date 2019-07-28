@@ -425,3 +425,4 @@ var url='${pageContext.request.contextPath}/rest/stuController/register.json';
 var url='${pageContext.request.contextPath}/rest/stuController/register.xml';
 ```
 
+##ssm框架搭建结束

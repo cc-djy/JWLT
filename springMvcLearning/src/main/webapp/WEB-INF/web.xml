@@ -33,7 +33,7 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
-  <!--找到上下文.xml-->
+  <!--扫描上下文，找到applicationContext.xml配置文件-->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>

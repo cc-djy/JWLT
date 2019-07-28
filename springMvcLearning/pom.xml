@@ -188,15 +188,15 @@
         </dependency>
         <!--mybatis-->
         <!--<dependency>-->
-            <!--<groupId>org.mybatis</groupId>-->
-            <!--<artifactId>mybatis</artifactId>-->
-            <!--<version>3.5.2</version>-->
+        <!--<groupId>org.mybatis</groupId>-->
+        <!--<artifactId>mybatis</artifactId>-->
+        <!--<version>3.5.2</version>-->
         <!--</dependency>-->
         <!--&lt;!&ndash;mybatis合spring整合&ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>org.mybatis</groupId>-->
-            <!--<artifactId>mybatis-spring</artifactId>-->
-            <!--<version>2.0.2</version>-->
+        <!--<groupId>org.mybatis</groupId>-->
+        <!--<artifactId>mybatis-spring</artifactId>-->
+        <!--<version>2.0.2</version>-->
         <!--</dependency>-->
         <!-- MyBatis核心包 -->
         <dependency>
@@ -247,5 +247,18 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <!-- 如果不添加此节点mybatis的mapper.xml文件都会被漏掉。 -->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/java</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.properties</include>-->
+                    <!--<include>**/*.xml</include>-->
+                <!--</includes>-->
+                <!--<filtering>false</filtering>-->
+            <!--</resource>-->
+        <!--</resources>-->
+
     </build>
 </project>
