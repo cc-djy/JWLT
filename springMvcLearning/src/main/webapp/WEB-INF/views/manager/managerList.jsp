@@ -19,6 +19,7 @@
         <td>密码</td>
         <td>性别</td>
         <td>年龄</td>
+        <td>个人照</td>
         <td>操作</td>
     </tr>
     <c:forEach items="${managerList}" var="manager">
@@ -28,6 +29,7 @@
             <td>${manager.password}</td>
             <td>${manager.gender}</td>
             <td>${manager.age}</td>
+            <td><img src="${manager.picture}" width="100px" height="100px"></td>
             <td><a href="${pageContext.request.contextPath}/managerController/toEditManager/${manager.mid}.do">修改</a>
                 <a href="${pageContext.request.contextPath}/managerController/toDeleteManager/${manager.mid}.do">删除</a></td>
         </tr>

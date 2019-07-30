@@ -17,8 +17,8 @@ public class ManagerServiceImpl implements IManagerService {
 
     @Override
 
-    public Manager loginService(Integer id) throws Exception {
-        return managerMapper.login(id);
+    public Manager managerLogin(Manager manager) throws Exception {
+        return managerMapper.managerLogin(manager);
     }
 
     @Override

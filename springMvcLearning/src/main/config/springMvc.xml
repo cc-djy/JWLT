@@ -65,4 +65,9 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+    <!--文件上传，限制文件上传大小-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="2048000"/>
+    </bean>
+
 </beans>

@@ -5,7 +5,7 @@ import java.util.List;
 //实现方法看config,里面的mapper,接口的命名和mapper里的xml命名要一致
 public interface ManagerMapper {
     //    登录判断，根据id
-    Manager login(Integer id) throws Exception;
+    Manager managerLogin(Manager manager) throws Exception;
 
     //    获取所有管理员
     public List<Manager> getManagerList() throws Exception;

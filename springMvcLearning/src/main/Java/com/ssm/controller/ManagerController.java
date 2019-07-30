@@ -1,4 +1,6 @@
 package com.ssm.controller;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ssm.pojo.Manager;
 import com.ssm.service.IManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,21 +10,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Controller
 @RequestMapping("/managerController")
 public class ManagerController {
     private List<Manager> managerList;
-    private Manager cManager;
+    private Manager cManager = new Manager();
     @Autowired
     private IManagerService managerService;
 
     @RequestMapping("/managerLogin")
     @ResponseBody
-    public String managerLogin(@RequestBody String message){
-        System.out.println(message);
-        return "success";
+    public Boolean managerLogin(@RequestBody String message) throws Exception {
+        JSONObject json = JSONArray.parseObject(message);
+        String name = (String) json.get("name");
+        String password = (String) json.get("password");
+        cManager = new Manager();
+        cManager.setName(name);
+        cManager.setPassword(password);
+        cManager = managerService.managerLogin(cManager);
+        if (cManager == null)
+            return false;
+        else
+            return true;
     }
 
     @RequestMapping("/toManagerList")
@@ -63,9 +76,22 @@ public class ManagerController {
 
     @RequestMapping("/addUser")
     public String addUser(Manager manager) throws Exception {
-        System.out.println(manager);
         managerService.insertManagerService(manager);
         return "redirect:toManagerList.do";
     }
+
+    @RequestMapping("/toAddManagerPicture")
+    public String toAddManagerPicture() {
+        return "manager/addPicture";
+    }
+
+    @RequestMapping("/addManagerPicture")
+    public String addManagerPicture(MultipartFile file) {
+        System.out.println("come in");
+        String fileLoad = file.getOriginalFilename();
+        System.out.println(fileLoad);
+        return "redirect:toManagerList.do";
+    }
+
 
 }

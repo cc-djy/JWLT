@@ -20,10 +20,10 @@
     </resultMap>
 
     <!--登录判断，根据id-->
-    <select id="login" resultMap="managerMap" parameterType="int">
+    <select id="managerLogin" resultMap="managerMap" parameterType="com.ssm.pojo.Manager">
         select * from manager
         <where>
-            mid=#{mid}
+            name=#{name} and password=#{password}
         </where>
     </select>
 

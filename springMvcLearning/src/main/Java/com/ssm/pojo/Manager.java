@@ -1,6 +1,7 @@
 package com.ssm.pojo;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -12,15 +13,18 @@ public class Manager {
     private String password;
     private String gender;
     private Integer age;
+    private String picture;
 
     public Manager() {
     }
 
-    public Manager( String name, String password, String gender, Integer age) {
+    public Manager(Integer mid, String name, String password, String gender, Integer age, String picture) {
+        this.mid = mid;
         this.name = name;
         this.password = password;
         this.gender = gender;
         this.age = age;
+        this.picture = picture;
     }
 
     public Integer getMid() {
@@ -63,6 +67,14 @@ public class Manager {
         this.age = age;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
         return "Manager{" +
@@ -71,6 +83,7 @@ public class Manager {
                 ", password='" + password + '\'' +
                 ", gender='" + gender + '\'' +
                 ", age=" + age +
+                ", picture='" + picture + '\'' +
                 '}';
     }
 }
