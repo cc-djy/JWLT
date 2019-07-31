@@ -478,5 +478,86 @@ mabatis.xml的写法改为
 </configuration>
 ```
 
+##springmvc拦截器
+在springmvc下添加xml如
+```xml
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <!--配置登录拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="com.ssm.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+```
+新建一个拦截包和拦截器的类代码为
+```java
+package com.ssm.interceptor;
 
+import org.springframework.lang.Nullable;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class LoginInterceptor implements HandlerInterceptor {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //拦截
+        //排除不需要拦截路径
+        if (request.getRequestURI().endsWith("managerController/managerLogin.do")){
+            return true;
+        }
+//        如果已经登录,放行
+        if (request.getSession().getAttribute("manager")!=null){
+            return true;
+        }
+        request.getRequestDispatcher("/WEB-INF/views/login.html").forward(request,response);
+        return false;
+    }
+
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
+        System.out.println("未返回视图前 后处理.......");
+    }
+
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
+        System.out.println("返回视图前 后处理.......");
+    }
+}
+
+```
+拦截器主要用为避免不合法访问
+
+##页面缓存
+主要作用：缓存经常访问但不经常更改内容的页面，来达到优化项目的目的
+新建一个oscache.properties文件放在资源文件下，配置如下
+```properties
+#不保存在内存
+cache.memory=false
+cache.persistence.class=com.opensymphony.oscache.plugins.diskpersistence.DiskPersistenceListener
+#缓存路径
+cache.path=F:\\study\\JavaEE\\JWLT\\springMvcLearning\\src\\main\\webapp\\cache
+```
+在web.xml文件下加入
+```xml
+<!--页面缓存,一般缓存不经常更新的-->
+  <filter>
+    <filter-name>oscache</filter-name>
+    <filter-class>com.opensymphony.oscache.web.filter.CacheFilter</filter-class>
+    <init-param>
+      <param-name>time</param-name>
+      <!--页面缓存时间设置-->
+      <param-value>10</param-value>
+    </init-param>
+    <init-param>
+      <param-name>scope</param-name>
+      <param-value>application</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>oscache</filter-name>
+    <!--需要进行页面缓存的路径-->
+    <url-pattern>/managerController/toManagerList.do</url-pattern>
+  </filter-mapping>
+```
 

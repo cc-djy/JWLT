@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="o" uri="http://www.opensymphony.com/oscache" %>
 <%--
   Created by IntelliJ IDEA.
   User: CD

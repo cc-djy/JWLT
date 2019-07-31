@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,8 @@ public class ManagerController {
 
     @RequestMapping("/managerLogin")
     @ResponseBody
-    public Boolean managerLogin(@RequestBody String message) throws Exception {
+    public Boolean managerLogin(@RequestBody String message, HttpSession session) throws Exception {
+        System.out.println(message);
         JSONObject json = JSONArray.parseObject(message);
         String name = (String) json.get("name");
         String password = (String) json.get("password");
@@ -32,10 +34,12 @@ public class ManagerController {
         cManager.setName(name);
         cManager.setPassword(password);
         cManager = managerService.managerLogin(cManager);
+        session.setAttribute("manager",cManager);
         if (cManager == null)
             return false;
-        else
+        else{
             return true;
+        }
     }
 
     @RequestMapping("/toManagerList")
@@ -79,19 +83,5 @@ public class ManagerController {
         managerService.insertManagerService(manager);
         return "redirect:toManagerList.do";
     }
-
-    @RequestMapping("/toAddManagerPicture")
-    public String toAddManagerPicture() {
-        return "manager/addPicture";
-    }
-
-    @RequestMapping("/addManagerPicture")
-    public String addManagerPicture(MultipartFile file) {
-        System.out.println("come in");
-        String fileLoad = file.getOriginalFilename();
-        System.out.println(fileLoad);
-        return "redirect:toManagerList.do";
-    }
-
 
 }

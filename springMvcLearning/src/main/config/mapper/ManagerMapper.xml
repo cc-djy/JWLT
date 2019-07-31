@@ -17,9 +17,10 @@
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="gender" property="gender" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="picture" property="picture" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--登录判断，根据id-->
+    <!--登录判断，用户名和密码-->
     <select id="managerLogin" resultMap="managerMap" parameterType="com.ssm.pojo.Manager">
         select * from manager
         <where>
@@ -42,15 +43,15 @@
     <update id="updateManagerFromId" parameterType="com.ssm.pojo.Manager">
          update manager
          set name=#{name},password=#{password},gender=#{gender},
-             age=#{age}
+             age=#{age},picture=#{picture}
         <where>mid=#{mid}</where>
      </update>
 
     <!-- 添加用户信息 -->
     <insert id="insertManager" parameterType="com.ssm.pojo.Manager">
-        insert into manager(name,password,gender,age)
+        insert into manager(name,password,gender,age,picture)
         values
-        (#{name},#{password},#{gender},#{age})
+        (#{name},#{password},#{gender},#{age},#{picture})
     </insert>
 
     <!-- 增删改查标签里的id:一定要和接口里对应的方法名一致 -->
